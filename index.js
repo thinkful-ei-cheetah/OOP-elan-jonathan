@@ -36,24 +36,35 @@ class Game {
   constructor() {
     this.activeDeck = new Play();
     this.discardDeck = new Discard();
+    this.drawDeck = new Draw();
   }
+
   createDeck() {
-    let drawDeck = new Draw();
-    let suits = [];
-    let values = [];
+    let suits = ['Hearts', 'Clubs', 'Spades', 'Diamonds'];
+    let values = ['Ace', 'King'];
     for (let i = 0; i < values.length; i++) {
-      for (let i = 0; i < suits.length; i++) {
-        let newCard = new Card(true, 'hearts', 'queen');
-        drawDeck.deck.push(newCard);
-        
+      for (let j = 0; j < suits.length; j++) {
+        let newCard = new Card(true, suits[j], values[i]);
+        this.drawDeck.deck.push(newCard);   
       }
-    }
-    
+    }  
   }
+
   playRound() {
-    let discard = this.activeDeck.deck.shift();
-    this.discardDeck.deck.push(discard);
+    if (this.activeDeck.deck.length >0)
+    {
+        let discard = this.activeDeck.deck.shift();
+        this.discardDeck.deck.push(discard);
+    }
     let playCard = this.drawDeck.deck.shift();
-    this.activeDeck.push(playCard);
+    this.activeDeck.deck.push(playCard);
   }
 }
+
+const newGame = new Game();
+
+newGame.createDeck();
+newGame.playRound();
+newGame.playRound();
+console.log(newGame)
+
